@@ -4,5 +4,20 @@ export function registerHealthTool(server) {
         title: 'Health Ping',
         description: 'Simple ping tool to verify the server is alive',
         inputSchema: { type: z.object({}) },
-    }, async () => ({ ok: true, ts: new Date().toISOString() }));
+        outputSchema: {
+            type: z.object({
+                ok: z.boolean(),
+                ts: z.string()
+            })
+        }
+    }, async () => {
+        return {
+            content: [
+                {
+                    type: "text",
+                    text: JSON.stringify({ ok: true, ts: new Date().toISOString() })
+                }
+            ]
+        };
+    });
 }

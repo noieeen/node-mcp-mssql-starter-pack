@@ -1,15 +1,10 @@
 {
   "name": "node-mcp-mssql",
   "version": "0.1.0",
+  "main": "index.js",
   "type": "module",
-  "bin": {
-    "mssql_mcp": "./build/index.js"
-  },
-  "main": "dist/server.js",
   "scripts": {
-    "build": "tsc && chmod 755 build/index.js",
-    "dev": "tsx src/server.ts",
-    "start": "node dist/server.js"
+    "build": "tsc && chmod 755 build/index.js"
   },
   "files": [
     "build"
