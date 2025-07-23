@@ -11,13 +11,19 @@ export function registerDescribeTableTool(server: McpServer) {
             inputSchema: {
                 table: z.string().min(1).describe("The table to describe"),
             },
-            outputSchema: {
-                table: z.string(),
-                column: z.string(),
-                type: z.string(),
-                nullable: z.boolean(),
-            },
         },
-        async ({table}) => await getTableColumns(table)
+        async ({table}) => {
+            const columns = getTableColumns(table);
+
+            // Format the response as expected by MCP
+            return {
+                content: [
+                    {
+                        type: "text" as const,
+                        text: JSON.stringify(columns, null, 2)
+                    }
+                ]
+            };
+        }
     );
 }

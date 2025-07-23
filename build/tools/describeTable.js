@@ -7,13 +7,16 @@ export function registerDescribeTableTool(server) {
         inputSchema: {
             table: z.string().min(1).describe("The table to describe"),
         },
-        outputSchema: z.object({
-            table: z.string(),
-            column: z.string(),
-            type: z.string(),
-            nullable: z.boolean(),
-        }),
     }, async ({ table }) => {
-        return getTableColumns(table);
+        const columns = getTableColumns(table);
+        // Format the response as expected by MCP
+        return {
+            content: [
+                {
+                    type: "text",
+                    text: JSON.stringify(columns, null, 2)
+                }
+            ]
+        };
     });
 }

@@ -6,6 +6,22 @@ export function registerHealthTool(server: McpServer) {
             title: 'Health Ping',
             description: 'Simple ping tool to verify the server is alive',
             inputSchema: {type: z.object({})},
+            outputSchema: {
+                type: z.object({
+                    ok: z.boolean(),
+                    ts: z.string()
+                })
+            }
         },
-        async () => ({ok: true, ts: new Date().toISOString()}));
+        async () => {
+            return {
+                content: [
+                    //     {
+                    //     // type: "object",
+                    //     // text: JSON.stringify({ok: true, ts: new Date().toISOString()})
+                    // }
+                ]
+            }
+        }
+    )
 }
