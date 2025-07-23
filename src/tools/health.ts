@@ -16,10 +16,10 @@ export function registerHealthTool(server: McpServer) {
         async () => {
             return {
                 content: [
-                    //     {
-                    //     // type: "object",
-                    //     // text: JSON.stringify({ok: true, ts: new Date().toISOString()})
-                    // }
+                    {
+                        type: "text" as const,
+                        text: JSON.stringify({ok: true, ts: new Date().toISOString()})
+                    }
                 ]
             }
         }

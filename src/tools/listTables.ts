@@ -6,7 +6,7 @@ export function registerListTablesTool(server: McpServer) {
     server.registerTool('sql.list_tables', {
         title: 'List tables',
         description: 'List available tables and schemas',
-        inputSchema: {type: z.object({}), properties: {...server}},
+        inputSchema: {type: z.object({})},
         outputSchema: {
             type: z.array(z.object({
                 schema: z.string(),
@@ -17,6 +17,14 @@ export function registerListTablesTool(server: McpServer) {
 
     }, async () => {
         const {tables} = await loadSchema();
-        return tables;
+        // Format the response as expected by MCP
+        return {
+            content: [
+                {
+                    type: "text" as const,
+                    text: JSON.stringify(tables, null, 2)
+                }
+            ]
+        };
     });
 }
