@@ -10,12 +10,12 @@ export function registerSqlQueryTool(server: McpServer) {
             sql: z.string().min(1).describe('SELECT-only SQL statement'),
             params: z.object({}).optional().describe('Parameters to pass to the SQL query'),
         },
-        outputSchema: {
-            type: z.object({
-                rows: z.array(z.object({})),
-                rowCount: z.number()
-            })
-        },
+        // outputSchema: {
+        //     type: z.object({
+        //         rows: z.array(z.object({})),
+        //         rowCount: z.number()
+        //     })
+        // },
     }, async ({sql, params}) => {
         if (/(\binsert|update|delete|merge|alter|drop|create\b)/i.test(sql)) {
             throw new Error('Only SELECT queries are allowed.');

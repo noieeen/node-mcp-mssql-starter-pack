@@ -19,7 +19,7 @@ export function registerDescribeTableTool(server: McpServer) {
             return {
                 content: [
                     {
-                        type: "text" as const,
+                        type: "text",
                         text: JSON.stringify(columns, null, 2)
                     }
                 ]

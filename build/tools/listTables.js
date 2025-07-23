@@ -5,12 +5,12 @@ export function registerListTablesTool(server) {
         title: 'List tables',
         description: 'List available tables and schemas',
         inputSchema: { type: z.object({}) },
-        outputSchema: {
-            type: z.array(z.object({
-                schema: z.string(),
-                table: z.string()
-            }))
-        },
+        // outputSchema: {
+        //     type: z.array(z.object({
+        //         schema: z.string(),
+        //         table: z.string()
+        //     }))
+        // },
     }, async () => {
         const { tables } = await loadSchema();
         // Format the response as expected by MCP
