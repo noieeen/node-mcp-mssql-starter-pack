@@ -1,0 +1,2 @@
+## run inspector
+npx @modelcontextprotocol/inspector node build/index.js

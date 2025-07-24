@@ -9,20 +9,20 @@ export function registerDescribeTableTool(server: McpServer) {
             title: "Describe table",
             description: "Get column info for a table",
             inputSchema: {
-                table: z.string().min(1).describe("The table to describe"),
+                table_name: z.string().min(3).default("CRM_Customer").describe("The table name to describe"),
             },
         },
-        async ({table}) => {
-            const columns = getTableColumns(table);
+        async ({table_name}) => {
+            const columns = await getTableColumns(table_name);
 
             // Format the response as expected by MCP
             return {
                 content: [
                     {
-                        type: "text",
+                        type: "text" as const,
                         text: JSON.stringify(columns, null, 2)
                     }
-                ]
+                ], columns
             };
         }
     );
