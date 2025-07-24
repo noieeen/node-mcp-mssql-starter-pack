@@ -13,17 +13,30 @@ export function registerDescribeTableTool(server: McpServer) {
             },
         },
         async ({table_name}) => {
-            const columns = await getTableColumns(table_name);
+            try {
+                const columns = await getTableColumns(table_name);
 
-            // Format the response as expected by MCP
-            return {
-                content: [
-                    {
-                        type: "text" as const,
-                        text: JSON.stringify(columns, null, 2)
-                    }
-                ], columns
-            };
+                // Format the response as expected by MCP
+                return {
+                    content: [
+                        {
+                            type: "text" as const,
+                            text: JSON.stringify(columns, null, 2)
+                        }
+                    ]
+                };
+            } catch (error) {
+                return {
+                    content: [
+                        {
+                            type: "text" as const,
+                            text: `Error describing table '${table_name}': ${error instanceof Error ? error.message : 'Unknown error'}`
+                        }
+                    ],
+                    isError: true
+                };
+            }
+
         }
     );
 }

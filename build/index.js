@@ -6,10 +6,12 @@ import { registerDescribeTableTool } from "./tools/describeTable.js";
 import { registerListTablesTool } from "./tools/listTables.js";
 import { registerHealthTool } from "./tools/health.js";
 import { logger } from "./utils/logger.js";
+import { registerSchemaTool } from "./tools/schema.js";
 async function main() {
     const transportType = process.env.MCP_TRANSPORT ?? "stdio";
     const transport = new StdioServerTransport();
     const server = new McpServer({ name: "node-mcp-mssql", version: "0.1.0" });
+    registerSchemaTool(server);
     registerHealthTool(server);
     registerListTablesTool(server);
     registerDescribeTableTool(server);
