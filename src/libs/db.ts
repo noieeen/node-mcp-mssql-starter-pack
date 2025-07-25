@@ -1,5 +1,5 @@
 import sql from 'mssql';
-import { logger } from './utils/logger.js';
+import { logger } from '../utils/logger.js';
 
 let pool: sql.ConnectionPool | null = null;
 

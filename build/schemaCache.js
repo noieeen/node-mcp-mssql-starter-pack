@@ -1,4 +1,4 @@
-import { query } from './db.js';
+import { query } from "./libs/db.js";
 let tables = null;
 let columns = null;
 let schemaLoadPromise = null;

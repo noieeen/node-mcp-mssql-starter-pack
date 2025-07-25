@@ -1,5 +1,5 @@
 import {McpServer} from "@modelcontextprotocol/sdk/server/mcp.js";
-import {query} from '../db.js';
+import {query} from "../libs/db.js";
 import {z} from "zod";
 
 export function registerSqlQueryTool(server: McpServer) {

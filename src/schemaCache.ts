@@ -1,4 +1,4 @@
-import {query} from './db.js';
+import {query} from "./libs/db.js";
 
 export type TableInfo = {
     table: string;
