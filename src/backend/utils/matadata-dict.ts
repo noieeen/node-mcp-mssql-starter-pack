@@ -1,5 +1,5 @@
 import {supabase} from "../../libs/supabase.js";
-import {getCache, setCache} from "../services/cacheService.js";
+import {getCache, setCache} from "../services/cacheService-v2.js";
 
 export async function loadBusinessDict(lang?: string): Promise<string[]> {
     const baseKey = lang === "th" ? "rag:businessDict:th" : "rag:businessDict:en";

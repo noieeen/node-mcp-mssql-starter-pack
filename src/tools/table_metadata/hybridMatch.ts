@@ -13,7 +13,7 @@ import {advanceMatchMetadataHybrid, type QueryConfig} from "../../backend/advanc
 // }
 export function registerTableMetadataTool(server: McpServer) {
     server.registerTool(
-        "metadata.get_table_columns_relationship_query_templates",
+        "metadata.get_all_metadata",
         {
             title: "Get table columns relationship and query templates",
             description: "Get BCRM table columns relationship and query templates",

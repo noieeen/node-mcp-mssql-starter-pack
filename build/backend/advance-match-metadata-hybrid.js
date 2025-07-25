@@ -57,7 +57,7 @@ function extractKeywords(question) {
         "ที่อยู่": ["address", "geolocation", "address", "province", "sub-district", "building", "street"],
         "อาศัย": ["address", "geolocation", "address", "province", "sub-district", "building", "street"],
     };
-    const expanded = pattern.split("|").flatMap((w) => { var _a; return (_a = synonyms[w]) !== null && _a !== void 0 ? _a : [w]; });
+    const expanded = pattern.split("|").flatMap((w) => synonyms[w] ?? [w]);
     // Ensure expanded is string[] (type guard)
     const final = Array.from(new Set(expanded.filter((x) => typeof x === 'string'))).slice(0, 10);
     console.log('final', final);

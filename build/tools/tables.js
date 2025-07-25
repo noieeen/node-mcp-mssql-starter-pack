@@ -163,9 +163,16 @@ export function registerListTablesTool(server) {
                         COUNT(DISTINCT ${column_name}) as distinct_values
                     FROM ${table_name}
                 `);
-            const profileData = Object.assign(Object.assign({ table: table_name, column: column_name, data_type: column.type, nullable: column.is_nullable }, profile), { null_percentage: profile.total_rows > 0
+            const profileData = {
+                table: table_name,
+                column: column_name,
+                data_type: column.type,
+                nullable: column.is_nullable,
+                ...profile,
+                null_percentage: profile.total_rows > 0
                     ? Math.round((profile.null_rows / profile.total_rows) * 100 * 100) / 100
-                    : 0 });
+                    : 0
+            };
             return {
                 content: [{
                         type: "text",

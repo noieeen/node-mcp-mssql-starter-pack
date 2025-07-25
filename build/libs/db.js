@@ -2,12 +2,11 @@ import sql from 'mssql';
 import { logger } from '../utils/logger.js';
 let pool = null;
 export async function getPool() {
-    var _a;
     if (pool)
         return pool;
     pool = await new sql.ConnectionPool({
         server: process.env.MSSQL_SERVER,
-        port: Number((_a = process.env.MSSQL_PORT) !== null && _a !== void 0 ? _a : 1433),
+        port: Number(process.env.MSSQL_PORT ?? 1433),
         user: process.env.MSSQL_USER,
         password: process.env.MSSQL_PASSWORD,
         database: process.env.MSSQL_DATABASE,
@@ -20,7 +19,6 @@ export async function getPool() {
     return pool;
 }
 export async function query(q, params, limit) {
-    var _a;
     if (limit && /^select\s+/i.test(q.trim())) {
         q = q.replace(/^select\s+/i, `SELECT TOP (${limit}) `);
     }
@@ -31,5 +29,5 @@ export async function query(q, params, limit) {
             request.input(k, v);
     }
     const res = await request.query(q);
-    return (_a = res.recordset) !== null && _a !== void 0 ? _a : [];
+    return res.recordset ?? [];
 }

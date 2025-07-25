@@ -9,8 +9,7 @@ import { registerSchemaTool } from "./tools/schema.js";
 import { registerQueryTemplateTools } from "./tools/templates.js";
 import { registerTableMetadataTool } from "./tools/table_metadata/hybridMatch.js";
 async function main() {
-    var _a;
-    const transportType = (_a = process.env.MCP_TRANSPORT) !== null && _a !== void 0 ? _a : "stdio";
+    const transportType = process.env.MCP_TRANSPORT ?? "stdio";
     const transport = new StdioServerTransport();
     const server = new McpServer({ name: "node-mcp-mssql", version: "0.1.0" });
     registerQueryTemplateTools(server);
