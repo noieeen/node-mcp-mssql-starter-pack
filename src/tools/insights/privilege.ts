@@ -1,5 +1,5 @@
 import {McpServer} from "@modelcontextprotocol/sdk/server/mcp.js";
-import {getTableColumns} from "../schemaCache.js";
+import {getTableColumns} from "../../schemaCache.js";
 import {z} from "zod";
 
 export function registerDescribeTableTool(server: McpServer) {
@@ -9,7 +9,7 @@ export function registerDescribeTableTool(server: McpServer) {
             title: "Describe table",
             description: "Get column info for a table",
             inputSchema: {
-                table_name: z.string().min(1).default("CRM_Customer").describe("The table name to describe"),
+                table_name: z.string().min(3).default("CRM_Customer").describe("The table name to describe"),
             },
         },
         async ({table_name}) => {

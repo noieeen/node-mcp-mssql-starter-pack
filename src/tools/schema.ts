@@ -1,5 +1,6 @@
 import {McpServer} from "@modelcontextprotocol/sdk/server/mcp.js";
-import {clearSchemaCache, getSchemaStats} from '../schemaCache.js';
+import {clearSchemaCache, getSchemaStats, tableExists} from '../schemaCache.js';
+import {z} from "zod";
 
 export function registerSchemaTool(server: McpServer) {
     server.registerTool('sql.clear_schema_cache', {
@@ -31,6 +32,7 @@ export function registerSchemaTool(server: McpServer) {
 
     });
 
+    // Sum schema stats
     server.registerTool('sql.get_schema_stats', {
         title: 'Show schema stats',
         description: 'Get schema stats(table count, total columns, average columns per table)',
@@ -58,5 +60,36 @@ export function registerSchemaTool(server: McpServer) {
             };
         }
 
+    });
+
+    // Table exist check
+    server.registerTool('sql.table_exists', {
+        title: 'Table exists',
+        description: 'Check if a table exists',
+        inputSchema: {
+            table_name: z.string().min(1).default("CRM_Customer").describe("The table name to check"),
+        },
+    }, async ({table_name}) => {
+        try {
+            const isTableExists = await tableExists(table_name);
+            return {
+                content: [
+                    {
+                        type: "text" as const,
+                        text: JSON.stringify({table_name, exists: isTableExists}, null, 2)
+                    }
+                ],
+            };
+        } catch (error) {
+            return {
+                content: [
+                    {
+                        type: "text" as const,
+                        text: `Error during table exists check: ${error instanceof Error ? error.message : 'Unknown error'}`
+                    }
+                ],
+                isError: true
+            };
+        }
     });
 }

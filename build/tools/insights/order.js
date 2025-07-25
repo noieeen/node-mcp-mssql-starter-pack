@@ -1,11 +1,11 @@
-import { getTableColumns } from "../schemaCache.js";
+import { getTableColumns } from "../../schemaCache.js";
 import { z } from "zod";
 export function registerDescribeTableTool(server) {
     server.registerTool("sql.describe_table", {
         title: "Describe table",
         description: "Get column info for a table",
         inputSchema: {
-            table_name: z.string().min(1).default("CRM_Customer").describe("The table name to describe"),
+            table_name: z.string().min(3).default("CRM_Customer").describe("The table name to describe"),
         },
     }, async ({ table_name }) => {
         try {
