@@ -4,11 +4,13 @@ import {z} from "zod";
 
 export function registerSqlQueryTool(server: McpServer) {
     server.registerTool('sql.query', {
-        title: 'SQL Query',
+        title: 'Execute SQL Query',
         description: 'Execute a read-only SQL query against MSSQL. NO mutations!',
         inputSchema: {
             sql: z.string().min(1).describe('SELECT-only SQL statement'),
             params: z.object({}).optional().describe('Parameters to pass to the SQL query'),
+            limit: z.number().min(1).max(1000).default(100).describe("Maximum number of rows to return")
+
         },
         // outputSchema: {
         //     type: z.object({
@@ -16,11 +18,13 @@ export function registerSqlQueryTool(server: McpServer) {
         //         rowCount: z.number()
         //     })
         // },
-    }, async ({sql, params}) => {
+    }, async ({sql, params, limit}) => {
         if (/(\binsert|update|delete|merge|alter|drop|create\b)/i.test(sql)) {
             throw new Error('Only SELECT queries are allowed.');
         }
-        const rows = await query(sql, params);
+        const trimmedQuery = sql.trim().toLowerCase();
+
+        const rows = await query(trimmedQuery, params);
         // Format the response as expected by MCP
         return {
             content: [

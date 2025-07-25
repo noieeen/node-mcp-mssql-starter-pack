@@ -18,7 +18,10 @@ export async function getPool() {
     logger.info('MSSQL pool connected');
     return pool;
 }
-export async function query(q, params) {
+export async function query(q, params, limit) {
+    if (limit && /^select\s+/i.test(q.trim())) {
+        q = q.replace(/^select\s+/i, `SELECT TOP (${limit}) `);
+    }
     const p = await getPool();
     const request = p.request();
     if (params) {

@@ -3,7 +3,7 @@ import {McpServer} from "@modelcontextprotocol/sdk/server/mcp.js";
 import {StdioServerTransport} from "@modelcontextprotocol/sdk/server/stdio.js";
 import {registerSqlQueryTool} from "./tools/sqlQuery.js";
 import {registerDescribeTableTool} from "./tools/describeTable.js";
-import {registerListTablesTool} from "./tools/listTables.js";
+import {registerListTablesTool} from "./tools/tables.js";
 import {registerHealthTool} from "./tools/health.js";
 import {logger} from "./utils/logger.js";
 import {registerSchemaTool} from "./tools/schema.js";

@@ -20,7 +20,10 @@ export async function getPool() {
   return pool;
 }
 
-export async function query<T = any>(q: string, params?: Record<string, unknown>): Promise<T[]> {
+export async function query<T = any>(q: string, params?: Record<string, unknown>,limit?: number): Promise<T[]> {
+  if (limit && /^select\s+/i.test(q.trim())) {
+    q = q.replace(/^select\s+/i, `SELECT TOP (${limit}) `);
+  }
   const p = await getPool();
   const request = p.request();
   if (params) {
@@ -29,3 +32,4 @@ export async function query<T = any>(q: string, params?: Record<string, unknown>
   const res = await request.query<T>(q);
   return res.recordset ?? [];
 }
+
